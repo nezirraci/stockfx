@@ -1,0 +1,97 @@
+﻿@model LoadProduct
+@{
+    ViewData["Title"] = "Load";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Load</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <span asp-></span>
+        <form asp-action="Load" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div id="formContainer" class="form-group">
+                <div>
+                    <label class="control-label">Koment:</label>
+                    <input asp-for="Coment" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Burimi:</label>
+                    <select asp-for="SourceId" asp-items="ViewBag.StockLocations" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Destinacioni:</label>
+                    <select asp-for="DestinationId" asp-items="ViewBag.StockLocations" class="form-control"></select>
+                </div>
+                <div id="dynamicForm" class="allForm">
+                    <div class="form-group">
+                        <label class="control-label">Selekto Produktin:</label>
+                        <select asp-for="Loads[0].ProductId" asp-items="ViewBag.Products" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Sasia:</label>
+                        <input asp-for="Loads[0].Quantity" class="form-control" />
+                    </div>
+                    <div id="DeleteProduct" class="form-group">
+                        <input type="submit" onclick="removeParent(this)" value="Remove Product" class="btn btn-danger" />
+                    </div>
+                </div>
+                <div id="AddProduct" class="form-group">
+                    <input type="submit" value="Add Product" class="btn btn-primary" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Ngarko" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script> 
+    var formId = 0;
+    function addElement() {
+        //Id Counter
+        formId++;
+        //Id teksti i formes dinamike
+        var idContent = "dynamicForm";
+        //Id teksti i parentit te formes dinamike
+        var Container = "formContainer";
+        //Id teksti i Add-Butonit
+        var AddButton = "AddProduct";
+        //Mere Add Butonin
+        var AddProductButton = document.getElementById(AddButton);
+        // Merre parent Nodin
+        var parentNode = document.getElementById(Container);
+        //Merre Template Nodin
+        var templateNode = document.getElementById(idContent);
+
+        //Klono nodin edhe krijo elementin e ri
+        var newElement = templateNode.cloneNode(true);
+        //Qitja atributin Id elementit te ri
+        newElement.id = idContent + formId; 
+
+
+        newElement.childNodes[1].childNodes[3].name = "Loads[" + formId + "].ProductId";
+
+        newElement.childNodes[3].childNodes[3].name = "Loads[" + formId + "].Quantity";
+
+        //Fute ne ParentNode
+        parentNode.insertBefore(newElement,AddProductButton);
+    }
+
+    function removeParent(self) {
+        //Get Parent Node
+        var DynamicFormNode = self.parentNode.parentNode;
+        DynamicFormNode.remove();
+        formId--;
+
+    }
+
+    var Shtobutoni = document.getElementById("AddProduct");
+    Shtobutoni.addEventListener("click", function (e) {
+        e.preventDefault();
+        addElement();
+    });
+    
+</script>

@@ -1,0 +1,68 @@
+﻿@{
+
+    var baze1=(List<CategoryQuantity>)ViewBag.ProductCategoriesQuantityBaze1;
+    var baze2 =(List<CategoryQuantity>)ViewBag.ProductCategoriesQuantityBaze2;
+    var pikap1 =(List<CategoryQuantity>)ViewBag.ProductCategoriesQuantityPikap1;
+
+}
+
+<h1 class="mt-4">Stock</h1>
+<a asp-controller="Products" asp-action="Load">
+    <div class="form-group">
+        <input type="submit" value="Ngarko" class="btn btn-primary" />
+    </div>
+</a>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Stock Baze 1</li>
+</ol>
+<div class="row">
+    @foreach (var ProductCategory in baze1)
+    {
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">@ProductCategory.CategoryName: @ProductCategory.Quantity</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a asp-controller="Home" asp-action="Details" asp-route-productCategoryName="@ProductCategory.CategoryName" asp-route-stockLocationId="1" class="small text-white stretched-link">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Stoku Baze 2</li>
+</ol>
+<div class="row">
+    @foreach (var ProductCategory in baze2)
+    {
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">@ProductCategory.CategoryName: @ProductCategory.Quantity</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a asp-controller="Home" asp-action="Details" asp-route-productCategoryName="@ProductCategory.CategoryName" asp-route-stockLocationId="2" class="small text-white stretched-link">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Stoku Pikap 1</li>
+</ol>
+
+<div class="row">
+    @foreach (var ProductCategory in pikap1)
+    {
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">@ProductCategory.CategoryName: @ProductCategory.Quantity</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a asp-controller="Home" asp-action="Details" asp-route-productCategoryName="@ProductCategory.CategoryName" asp-route-stockLocationId="3" class="small text-white stretched-link">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

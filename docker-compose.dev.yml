@@ -1,0 +1,52 @@
+version: '3.6'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+     - proxy
+     - backend
+
+  Web:
+    image: elcom
+    container_name: Web
+    build:
+      context: .
+      dockerfile: Dockerfile  
+    ports:
+      - "5000"
+    networks:
+     - backend
+    environment: 
+     - ASPNETCORE_URLS=http://*:5000
+     - ASPNETCORE_ENVIRONMENT=Development
+     - VIRTUAL_HOST=localhost
+     - DATABASE_SERVICE=db
+     - DATABASE_PORT=5432
+     - DATABASE_NAME=localdb
+     - DATABASE_USER=localuser
+     - DATABASE_PASSWORD=localpass
+
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      POSTGRES_PASSWORD: localpass
+      POSTGRES_USER: localuser
+      POSTGRES_DB: localdb
+    networks:
+      - backend
+    ports:
+    - "5432:5432"
+
+networks:
+  proxy:
+    external:
+      name: nginx-proxy
+  backend:
+    external:
+      name: backend-network
