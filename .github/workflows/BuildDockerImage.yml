@@ -9,4 +9,4 @@ jobs:
     steps:
     - name: Run a multi-line script
       run: |
-        docker build -t StockFxApp .
+        docker build . -t StockFxImage
