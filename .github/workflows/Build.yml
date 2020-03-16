@@ -11,4 +11,4 @@ jobs:
     - uses: actions/checkout@v2
     - name: build docker container
       run: |
-        docker build . -t StockFx
+        docker build . -t stockfx
