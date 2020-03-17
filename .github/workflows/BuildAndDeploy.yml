@@ -24,7 +24,6 @@ jobs:
        username: ${{ secrets.SSH_HOST_USER }}
        key: ${{ secrets.SSH_HOST_PRIVATE_KEY }}
        port: ${{ secrets.SSH_HOST_PORT }}
-       passphrase: ${{ secrets.SSH_HOST_PASSPHRASE }}
        script: |
          /home/deploy
          
