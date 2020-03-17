@@ -10,8 +10,8 @@ jobs:
     - name: build docker container
       run: |
         docker build . -t stockfx
+    - uses: actions/upload-artifact@v1 
     - name: Upload math result for job 2
-    - uses: actions/upload-artifact@v1
       with:
        name: Images
        path: Images/
