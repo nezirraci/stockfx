@@ -17,3 +17,14 @@ jobs:
         name: 133041994/stockfx
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: execute deploy script in production server
+      uses: appleboy/ssh-action@master
+      with:
+       host: ${{ secrets.SSH_HOST_IP }}
+       username: ${{ secrets.SSH_HOST_USER }}
+       key: ${{ secrets.SSH_HOST_PRIVATE_KEY }}
+       port: ${{ secrets.SSH_HOST_PORT }}
+       passphrase: ${{ secrets.SSH_HOST_PASSPHRASE }}
+       script: |
+         /home/deploy
+         
