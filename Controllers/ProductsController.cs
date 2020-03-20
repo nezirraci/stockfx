@@ -185,16 +185,16 @@ namespace ElcomManage.Controllers
         public IActionResult Load()
 
         {
-            ViewData["Products"] = new SelectList(_context.Set<Product>(), "Id", "Name");
+            ViewData["Products"] = new SelectList(_context.Set<Product>().OrderBy(p => p.Name), "Id", "Name");
 
             if(User.IsInRole("ADMIN") || User.IsInRole("PUNETOR BAZE")) { 
             
-            ViewData["StockLocations"] = new SelectList(_context.Set<StockLocation>(), "Id", "Name");
+            ViewData["StockLocations"] = new SelectList(_context.Set<StockLocation>().OrderBy(s => s.Name), "Id", "Name");
             }
 
             else if(User.IsInRole("PUNETOR TERENI"))
             {
-                ViewData["StockLocations"] = new SelectList(_context.Set<StockLocation>().Where(s => s.InBase==false && s.InHouse==true), "Id", "Name");
+                ViewData["StockLocations"] = new SelectList(_context.Set<StockLocation>().Where(s => s.InBase==false && s.InHouse==true).OrderBy(s => s.Name), "Id", "Name");
             }
 
 
@@ -218,9 +218,9 @@ namespace ElcomManage.Controllers
 
                     if (SourceStock.StockLocation.InHouse)
                     {
-                        if(SourceStock.Quantity<=0)
+                        if(SourceStock.Quantity-Load.Quantity<0)
                         {
-                            ModelState.AddModelError(string.Empty, "Nuk e ke "+Produkti.Name+" ne "+SourceStock.StockLocation.Name);
+                            ModelState.AddModelError(string.Empty, "Nuk ke sasi te "+Produkti.Name+" mjaftueshem ne "+SourceStock.StockLocation.Name);
                             return View(lp);
                         }
                         SourceStock.Quantity -= Load.Quantity;
@@ -240,6 +240,19 @@ namespace ElcomManage.Controllers
 
                         return RedirectToAction("Index", "Home");
                 
+            }
+
+            ViewData["Products"] = new SelectList(_context.Set<Product>().OrderBy(p => p.Name), "Id", "Name");
+
+            if (User.IsInRole("ADMIN") || User.IsInRole("PUNETOR BAZE"))
+            {
+
+                ViewData["StockLocations"] = new SelectList(_context.Set<StockLocation>().OrderBy(p => p.Name), "Id", "Name");
+            }
+
+            else if (User.IsInRole("PUNETOR TERENI"))
+            {
+                ViewData["StockLocations"] = new SelectList(_context.Set<StockLocation>().Where(s => s.InBase == false && s.InHouse == true).OrderBy(p => p.Name), "Id", "Name");
             }
 
             return View(lp);
