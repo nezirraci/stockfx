@@ -106,7 +106,7 @@ namespace ElcomManage.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "ADMIN,PUNETOR BAZE")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,InHouse")] StockLocation stockLocation)
+        public async Task<IActionResult> Edit(int id, StockLocation stockLocation)
         {
             if (id != stockLocation.Id)
             {

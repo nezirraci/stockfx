@@ -230,10 +230,13 @@ namespace ElcomManage.Controllers
                     DestinationStock.Quantity += Load.Quantity;
                 }
 
+                var SourceLocation = await _context.StockLocation.Where(s => s.Id == lp.SourceId).SingleOrDefaultAsync();
+                var DestiantionLocation = await _context.StockLocation.Where(s => s.Id == lp.DestinationId).SingleOrDefaultAsync();
+
                 Activity activity = new Activity
                 {
                     Date = DateTime.Now,
-                    Comment = User.Identity.Name + " ka bere aranzhim te ketyre produkteve. " + produktet + ".Komenti:" + lp.Coment
+                    Comment = User.Identity.Name + " ka bere aranzhim te ketyre produkteve nga "+SourceLocation.Name+" ne "+DestiantionLocation.Name+"." + produktet + ".Komenti:" + lp.Coment
                 };
                          _context.Activities.Add(activity);
                         await _context.SaveChangesAsync();
