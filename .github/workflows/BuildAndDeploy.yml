@@ -12,7 +12,7 @@ jobs:
         docker build . -t 133041994/stockfx
     - uses: actions/checkout@master
     - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
+      uses: elgohr/Publish-Docker-Github-Action@v5
       with:
         name: 133041994/stockfx
         username: ${{ secrets.DOCKER_USERNAME }}
